@@ -1,9 +1,12 @@
 ﻿{
   "frameworks": {
-    "net46": { }
+    "net46": {}
   },
   "runtimes": {
-    "win": { },
-    "win-anycpu": { }
+    "win": {},
+    "win-anycpu": {}
+  },
+  "dependencies": {
+    "Open.WinKeyboardHook": "1.0.10"
   }
 }
