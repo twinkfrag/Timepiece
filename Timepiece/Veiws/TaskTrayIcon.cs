@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Timepiece
+namespace twinkfrag.Timepiece.Veiws
 {
 	class TaskTrayIcon : IDisposable
 	{
@@ -17,7 +17,7 @@ namespace Timepiece
 				Visible = true,
 				ContextMenu = new ContextMenu(new[]
 				{
-					new MenuItem("E&xit", (sender, args) => App.Current.Shutdown()),
+					new MenuItem("E&xit", (sender, args) => Application.Current.Shutdown()),
 				}),
 			};
 		}

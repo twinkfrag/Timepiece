@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Timepiece
+namespace twinkfrag.Timepiece.Models
 {
 	public class HotKey : IDisposable
 	{
