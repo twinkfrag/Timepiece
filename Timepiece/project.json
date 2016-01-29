@@ -7,6 +7,7 @@
     "win-anycpu": {}
   },
   "dependencies": {
-    "Open.WinKeyboardHook": "1.0.10"
+    "Open.WinKeyboardHook": "1.0.10",
+    "Rx-WPF": "2.2.5"
   }
 }
