@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Windows.Input;
 using Open.WinKeyboardHook;
@@ -10,13 +13,15 @@ namespace twinkfrag.Timepiece.Models.ShortcutKey
 	{
 		private readonly IKeyboardInterceptor interceptor = new KeyboardInterceptor();
 
-		private readonly Subject<Key> keyDownSubject = new Subject<Key>();
-		private readonly Subject<Key> keyUpSubject = new Subject<Key>();
+		private readonly Subject<ISet<Key>> keySubject = new Subject<ISet<Key>>();
+		private readonly HashSet<Key> pressedKeys = new HashSet<Key>();
 
 		public ShortcutKeyDetector()
 		{
-			this.interceptor.KeyDown += InterceptorOnKeyDown;
-			this.interceptor.KeyUp += InterceptorOnKeyUp;
+			this.interceptor.KeyDown += this.InterceptorOnKeyDown;
+			this.interceptor.KeyUp += this.InterceptorOnKeyUp;
+
+			this.Start();
 		}
 
 		public void Start()
@@ -29,30 +34,36 @@ namespace twinkfrag.Timepiece.Models.ShortcutKey
 			this.interceptor.StopCapturing();
 		}
 
+		public IDisposable Suspend()
+		{
+			this.Stop();
+			return Disposable.Create(this.Start);
+		}
+
 		private void InterceptorOnKeyDown(object sender, System.Windows.Forms.KeyEventArgs args)
 		{
 			var key = KeyInterop.KeyFromVirtualKey((int)args.KeyCode);
-			keyDownSubject.OnNext(key);
+			this.pressedKeys.Add(key);
 		}
 
 		private void InterceptorOnKeyUp(object sender, System.Windows.Forms.KeyEventArgs args)
 		{
 			var key = KeyInterop.KeyFromVirtualKey((int)args.KeyCode);
-			keyUpSubject.OnNext(key);
+			this.keySubject.OnNext(new HashSet<Key>(this.pressedKeys));
+			this.pressedKeys.Remove(key);
 		}
 
-		public IObservable<Key> OnKeyDownAsObservable() => keyDownSubject;
-
-		public IObservable<Key> OnKeyUpAsObservable() => keyUpSubject;
+		public IObservable<ISet<Key>> KeySetPressedAsObservable() => this.keySubject.AsObservable();
 
 		public void Dispose()
 		{
-			Stop();
+			this.Stop();
 
-			keyDownSubject.OnCompleted();
-			keyDownSubject.Dispose();
-			keyUpSubject.OnCompleted();
-			keyUpSubject.Dispose();
+			this.interceptor.KeyDown -= this.InterceptorOnKeyDown;
+			this.interceptor.KeyUp -= this.InterceptorOnKeyUp;
+
+			this.keySubject.OnCompleted();
+			this.keySubject.Dispose();
 		}
 	}
 }
