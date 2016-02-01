@@ -68,6 +68,7 @@
     <Compile Include="Models\ShortcutKey\ShortcutKeyDetector.cs" />
     <Compile Include="Models\NativeHotKey.cs" />
     <Compile Include="Utils\DisposableHelper.cs" />
+    <Compile Include="Utils\EnumerableEx.cs" />
     <Compile Include="Veiws\TaskTrayIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
