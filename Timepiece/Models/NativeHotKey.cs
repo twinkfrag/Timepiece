@@ -4,12 +4,12 @@ using System.Windows.Forms;
 
 namespace twinkfrag.Timepiece.Models
 {
-	public class HotKey : IDisposable
+	public class NativeHotKey : IDisposable
 	{
 		private readonly IntPtr hWnd;
 		private readonly IntPtr lParam;
 
-		public HotKey(IntPtr hWnd, ModKeys modKey, Keys key)
+		public NativeHotKey(IntPtr hWnd, ModKeys modKey, Keys key)
 		{
 			this.hWnd = hWnd;
 			lParam = new IntPtr((int)modKey | ((int)key * 0x10000));

@@ -64,7 +64,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\HotKey.cs" />
+    <Compile Include="Models\ShortcutKey\ShortcutKey.cs" />
+    <Compile Include="Models\ShortcutKey\ShortcutKeyDetector.cs" />
+    <Compile Include="Models\NativeHotKey.cs" />
     <Compile Include="Utils\DisposableHelper.cs" />
     <Compile Include="Veiws\TaskTrayIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
