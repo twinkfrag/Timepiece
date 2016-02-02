@@ -32,12 +32,13 @@ namespace twinkfrag.Timepiece
 
 			var detector = new ShortcutKeyDetector().AddTo(this);
 			detector.KeySetPressedAsObservable()
-					.Where(keys => keys.Contains(Key.LWin))
+					.Where(keys => keys.ShortcutKey.Modifiers.Contains(Key.LWin))
 			        .Subscribe(keys =>
 			        {
-				        Console.WriteLine($"keys: {keys.JoinToString(", ")}");
-				        if (keys.Count == shortcut.Length && !keys.Except(shortcut).Any())
+				        Console.WriteLine($"keys: {keys.ShortcutKey.Modifiers.JoinToString(", ")} + {keys.ShortcutKey.Key}");
+				        if (keys.ShortcutKey.Modifiers.Contains(Key.LWin) && keys.ShortcutKey.Key == Key.C)
 				        {
+					        keys.Handled = true;
 					        this.Shutdown();
 				        }
 			        }).AddTo(this);

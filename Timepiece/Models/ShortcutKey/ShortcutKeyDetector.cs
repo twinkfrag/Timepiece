@@ -13,8 +13,8 @@ namespace twinkfrag.Timepiece.Models.ShortcutKey
 	{
 		private readonly IKeyboardInterceptor interceptor = new KeyboardInterceptor();
 
-		private readonly Subject<ISet<Key>> keySubject = new Subject<ISet<Key>>();
-		private readonly HashSet<Key> pressedKeys = new HashSet<Key>();
+		private readonly Subject<ShortcutKeyPressedEventArgs> keySubject = new Subject<ShortcutKeyPressedEventArgs>();
+		private readonly HashSet<Key> pressedModifiers = new HashSet<Key>();
 
 		public ShortcutKeyDetector()
 		{
@@ -43,17 +43,28 @@ namespace twinkfrag.Timepiece.Models.ShortcutKey
 		private void InterceptorOnKeyDown(object sender, System.Windows.Forms.KeyEventArgs args)
 		{
 			var key = KeyInterop.KeyFromVirtualKey((int)args.KeyCode);
-			this.pressedKeys.Add(key);
+
+			if (key.IsModifyKey())
+			{
+				this.pressedModifiers.Add(key);
+			}
+			else
+			{
+				var shortcut = new ShortcutKeyPressedEventArgs(new ShortcutKey(key, new HashSet<Key>(this.pressedModifiers)));
+				this.keySubject.OnNext(shortcut);
+				args.SuppressKeyPress = shortcut.Handled;
+			}
 		}
 
 		private void InterceptorOnKeyUp(object sender, System.Windows.Forms.KeyEventArgs args)
 		{
+			if(!this.pressedModifiers.Any()) return;
+
 			var key = KeyInterop.KeyFromVirtualKey((int)args.KeyCode);
-			this.keySubject.OnNext(new HashSet<Key>(this.pressedKeys));
-			this.pressedKeys.Remove(key);
+			this.pressedModifiers.Remove(key);
 		}
 
-		public IObservable<ISet<Key>> KeySetPressedAsObservable() => this.keySubject.AsObservable();
+		public IObservable<ShortcutKeyPressedEventArgs> KeySetPressedAsObservable() => this.keySubject.AsObservable();
 
 		public void Dispose()
 		{
