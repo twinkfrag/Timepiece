@@ -16,6 +16,8 @@ namespace twinkfrag.Timepiece.Models.ShortcutKey
 		private readonly Subject<ShortcutKeyPressedEventArgs> keySubject = new Subject<ShortcutKeyPressedEventArgs>();
 		private readonly HashSet<Key> pressedModifiers = new HashSet<Key>();
 
+		public bool RequireModifier { get; set; } = false;
+
 		public ShortcutKeyDetector()
 		{
 			this.interceptor.KeyDown += this.InterceptorOnKeyDown;
@@ -48,11 +50,11 @@ namespace twinkfrag.Timepiece.Models.ShortcutKey
 			{
 				this.pressedModifiers.Add(key);
 			}
-			else
+			else if (this.pressedModifiers.Count > 0 || !this.RequireModifier)
 			{
 				var shortcut = new ShortcutKeyPressedEventArgs(new ShortcutKey(key, new HashSet<Key>(this.pressedModifiers)));
 				this.keySubject.OnNext(shortcut);
-				args.SuppressKeyPress = shortcut.Handled;
+				args.SuppressKeyPress = !shortcut.Handled;
 			}
 		}
 

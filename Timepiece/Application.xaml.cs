@@ -22,25 +22,21 @@ namespace twinkfrag.Timepiece
 	{
 		private readonly CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+		public ShortcutKey Shortcut { get; } = new ShortcutKey(Key.C, Key.LWin);
+
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
 
 			new TaskTrayIcon().AddTo(this);
 
-			var shortcut = new[] { Key.LWin, Key.C };
-
 			var detector = new ShortcutKeyDetector().AddTo(this);
 			detector.KeySetPressedAsObservable()
-					.Where(keys => keys.ShortcutKey.Modifiers.Contains(Key.LWin))
-			        .Subscribe(keys =>
+					.Where(args => args.ShortcutKey == this.Shortcut)
+			        .Subscribe(args =>
 			        {
-				        Console.WriteLine($"keys: {keys.ShortcutKey.Modifiers.JoinToString(", ")} + {keys.ShortcutKey.Key}");
-				        if (keys.ShortcutKey.Modifiers.Contains(Key.LWin) && keys.ShortcutKey.Key == Key.C)
-				        {
-					        keys.Handled = true;
-					        this.Shutdown();
-				        }
+				        args.Handled = true;
+				        MessageBox.Show(args.ToString());
 			        }).AddTo(this);
 		}
 

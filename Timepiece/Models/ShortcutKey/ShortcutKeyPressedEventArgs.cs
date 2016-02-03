@@ -12,5 +12,10 @@ namespace twinkfrag.Timepiece.Models.ShortcutKey
 		{
 			this.ShortcutKey = shortcutKey;
 		}
+
+		public override string ToString()
+		{
+			return $"Pressed {ShortcutKey}";
+		}
 	}
 }
