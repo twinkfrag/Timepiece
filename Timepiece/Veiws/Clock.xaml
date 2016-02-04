@@ -1,0 +1,57 @@
+﻿<Window x:Class="twinkfrag.Timepiece.Veiws.Clock"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:twinkfrag.Timepiece.Veiws"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="Clock"
+		Height="200"
+		Width="600"
+		ResizeMode="NoResize"
+		WindowStyle="None"
+		WindowStartupLocation="CenterScreen"
+		ShowInTaskbar="False"
+		AllowsTransparency="True"
+		Topmost="True"
+		SnapsToDevicePixels="True" 
+		LostFocus="Clock_OnLostFocus"
+		Background="{DynamicResource Background}" 
+		Foreground="{DynamicResource Foreground}"
+		>
+	<Window.Resources>
+		<SolidColorBrush x:Key="Background" Color="Black"/>
+		<SolidColorBrush x:Key="Foreground" Color="White"/>
+	</Window.Resources>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="4*" />
+			<ColumnDefinition Width="9*" />
+			<ColumnDefinition Width="7*" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<TextBlock Grid.Column="1" 
+				   Grid.RowSpan="2"
+				   Text="12:22" 
+				   HorizontalAlignment="Center" 
+				   VerticalAlignment="Center" 
+				   FontFamily="Meiryo UI" 
+				   FontSize="90" />
+		<TextBlock Grid.Column="2"
+				   Grid.Row="0"
+				   Text="2月5日"
+				   HorizontalAlignment="Left"
+				   VerticalAlignment="Bottom"
+				   FontSize="48" />
+		<TextBlock Grid.Column="2"
+				   Grid.Row="1"
+				   Text="金曜日"
+				   HorizontalAlignment="Left"
+				   VerticalAlignment="Top"
+				   FontSize="48"></TextBlock>
+	</Grid>
+</Window>

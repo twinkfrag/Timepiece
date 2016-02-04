@@ -22,7 +22,7 @@ namespace twinkfrag.Timepiece
 	{
 		private readonly CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-		public ShortcutKey Shortcut { get; } = new ShortcutKey(Key.C, Key.LWin);
+		public ShortcutKey Shortcut { get; } = new ShortcutKey(Key.C, Key.LWin, Key.LeftCtrl);
 
 		protected override void OnStartup(StartupEventArgs e)
 		{
@@ -36,7 +36,7 @@ namespace twinkfrag.Timepiece
 			        .Subscribe(args =>
 			        {
 				        args.Handled = true;
-				        MessageBox.Show(args.ToString());
+				        new Clock().Show();
 			        }).AddTo(this);
 		}
 
