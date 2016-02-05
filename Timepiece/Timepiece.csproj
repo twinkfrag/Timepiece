@@ -62,6 +62,7 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModels\ClockVewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\ShortcutKey\ShortcutKey.cs" />
@@ -101,9 +102,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Veiws\Clock.xaml">
       <SubType>Designer</SubType>

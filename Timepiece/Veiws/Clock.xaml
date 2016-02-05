@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:twinkfrag.Timepiece.Veiws"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:vm="clr-namespace:twinkfrag.Timepiece.ViewModels"
         mc:Ignorable="d"
         Title="Clock"
 		Height="200"
@@ -20,6 +20,9 @@
 		Background="{DynamicResource Background}" 
 		Foreground="{DynamicResource Foreground}"
 		>
+	<Window.DataContext>
+		<vm:ClockVewModel />
+	</Window.DataContext>
 	<Window.Resources>
 		<SolidColorBrush x:Key="Background" Color="Black"/>
 		<SolidColorBrush x:Key="Foreground" Color="White"/>
@@ -36,7 +39,7 @@
 		</Grid.RowDefinitions>
 		<TextBlock Grid.Column="1" 
 				   Grid.RowSpan="2"
-				   Text="12:22" 
+				   Text="{Binding Time, Mode=OneWay}" 
 				   HorizontalAlignment="Center" 
 				   VerticalAlignment="Center" 
 				   FontFamily="Meiryo UI" 
