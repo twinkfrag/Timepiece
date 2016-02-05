@@ -11,7 +11,7 @@ using System.Windows.Input;
 using twinkfrag.Timepiece.Models;
 using twinkfrag.Timepiece.Models.ShortcutKey;
 using twinkfrag.Timepiece.Utils;
-using twinkfrag.Timepiece.Veiws;
+using twinkfrag.Timepiece.Views;
 
 namespace twinkfrag.Timepiece
 {

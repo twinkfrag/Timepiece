@@ -72,10 +72,10 @@
     <Compile Include="Models\ShortcutKey\ShortcutKeyPressedEventArgs.cs" />
     <Compile Include="Utils\DisposableHelper.cs" />
     <Compile Include="Utils\EnumerableEx.cs" />
-    <Compile Include="Veiws\Clock.xaml.cs">
+    <Compile Include="Views\Clock.xaml.cs">
       <DependentUpon>Clock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Veiws\TaskTrayIcon.cs" />
+    <Compile Include="Views\TaskTrayIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -104,7 +104,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Include="Veiws\Clock.xaml">
+    <Page Include="Views\Clock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

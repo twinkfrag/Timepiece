@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace twinkfrag.Timepiece.Veiws
+namespace twinkfrag.Timepiece.Views
 {
 	class TaskTrayIcon : IDisposable
 	{
@@ -10,7 +10,7 @@ namespace twinkfrag.Timepiece.Veiws
 
 		public TaskTrayIcon()
 		{
-			notifyIcon = new NotifyIcon
+			this.notifyIcon = new NotifyIcon
 			{
 				Text = nameof(Timepiece),
 				Icon = SystemIcons.Application,
@@ -24,7 +24,7 @@ namespace twinkfrag.Timepiece.Veiws
 
 		public void Dispose()
 		{
-			notifyIcon?.Dispose();
+			this.notifyIcon?.Dispose();
 		}
 	}
 }
