@@ -22,7 +22,8 @@
 		SnapsToDevicePixels="True" 
 		LostFocus="Clock_OnLostFocus"
 		Background="{DynamicResource Background}" 
-		Foreground="{DynamicResource Foreground}"
+		Foreground="{DynamicResource Foreground}" 
+		FontFamily="Meiryo UI"
 		>
 	<Window.DataContext>
 		<vm:ClockVewModel />
@@ -65,17 +66,16 @@
 				   Text="{Binding Time, Mode=OneWay}" 
 				   HorizontalAlignment="Center" 
 				   VerticalAlignment="Center" 
-				   FontFamily="Meiryo UI" 
 				   FontSize="90" />
 		<TextBlock Grid.Column="2"
 				   Grid.Row="0"
-				   Text="2月5日"
+				   Text="{Binding Date, Mode=OneWay}"
 				   HorizontalAlignment="Left"
 				   VerticalAlignment="Bottom"
 				   FontSize="48" />
 		<TextBlock Grid.Column="2"
 				   Grid.Row="1"
-				   Text="金曜日"
+				   Text="{Binding Weekday, Mode=OneWay}"
 				   HorizontalAlignment="Left"
 				   VerticalAlignment="Top"
 				   FontSize="48"></TextBlock>

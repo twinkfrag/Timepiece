@@ -75,5 +75,16 @@ namespace twinkfrag.Timepiece.ViewModels
 		private void UpdateTime() => this.RaisePropertyChanged(nameof(this.Time));
 		#endregion
 
+		#region Date変更通知プロパティ
+		public string Date => DateTime.Today.ToString("M");
+
+		private void UpdateDate() => this.RaisePropertyChanged(nameof(this.Date));
+		#endregion
+
+		#region Weekday変更通知プロパティ
+		public string Weekday => DateTime.Today.ToString("dddd");
+
+		private void UpdateWeekday() => this.RaisePropertyChanged(nameof(this.Weekday));
+		#endregion
 	}
 }
