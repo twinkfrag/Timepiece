@@ -20,7 +20,7 @@
 		AllowsTransparency="True"
 		Topmost="True"
 		SnapsToDevicePixels="True" 
-		LostFocus="Clock_OnLostFocus"
+		Deactivated="Clock_OnDeactivated"
 		Background="{DynamicResource Background}" 
 		Foreground="{DynamicResource Foreground}" 
 		FontFamily="Meiryo UI"

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace twinkfrag.Timepiece.Views
 {
@@ -12,7 +13,7 @@ namespace twinkfrag.Timepiece.Views
 			InitializeComponent();
 		}
 
-		private void Clock_OnLostFocus(object sender, RoutedEventArgs e)
+		private void Clock_OnDeactivated(object sender, EventArgs e)
 		{
 			this.Close();
 		}
