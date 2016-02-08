@@ -11,6 +11,8 @@ namespace twinkfrag.Timepiece.Views
 		public Clock()
 		{
 			InitializeComponent();
+			this.Show();
+			this.Activate();
 		}
 
 		private void Clock_OnDeactivated(object sender, EventArgs e)

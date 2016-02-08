@@ -36,7 +36,7 @@ namespace twinkfrag.Timepiece
 			        .Subscribe(args =>
 			        {
 				        args.Handled = true;
-				        new Clock().Show();
+				        new Clock();
 			        }).AddTo(this);
 		}
 
