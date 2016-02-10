@@ -54,7 +54,7 @@ namespace twinkfrag.Timepiece.Models.ShortcutKey
 			{
 				var shortcut = new ShortcutKeyPressedEventArgs(new ShortcutKey(key, new HashSet<Key>(this.pressedModifiers)));
 				this.keySubject.OnNext(shortcut);
-				args.SuppressKeyPress = !shortcut.Handled;
+				args.SuppressKeyPress = shortcut.Handled;
 			}
 		}
 
