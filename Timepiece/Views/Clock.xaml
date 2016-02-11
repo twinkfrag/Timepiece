@@ -15,7 +15,6 @@
 		Width="600"
 		ResizeMode="NoResize"
 		WindowStyle="None"
-		WindowStartupLocation="CenterScreen"
 		ShowInTaskbar="False"
 		AllowsTransparency="True"
 		Topmost="True"
@@ -23,7 +22,8 @@
 		Deactivated="Clock_OnDeactivated"
 		Background="{DynamicResource Background}" 
 		Foreground="{DynamicResource Foreground}" 
-		FontFamily="Meiryo UI"
+		Left="{Binding Left, Mode=OneWay}"
+		Top="{Binding Top, Mode=OneWay}"
 		>
 	<Window.DataContext>
 		<vm:ClockVewModel />

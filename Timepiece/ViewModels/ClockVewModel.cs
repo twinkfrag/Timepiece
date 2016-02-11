@@ -60,14 +60,25 @@ namespace twinkfrag.Timepiece.ViewModels
          * 自動的にUIDispatcher上での通知に変換されます。変更通知に際してUIDispatcherを操作する必要はありません。
          */
 
+		public ClockVewModel()
+		{
+			var desktop = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
+			this.Left = desktop.Left + DISPLAY_MARGIN;
+			this.Top = desktop.Bottom - this.Height - DISPLAY_MARGIN;
+		}
+
 		public void Initialize()
 		{
 			var timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.DataBind, (_, __) => this.UpdateTime(),
 				Dispatcher.CurrentDispatcher);
 			timer.Start();
 			this.CompositeDisposable.Add(() => timer.Stop());
+
+			this.RaisePropertyChanged(nameof(this.Left));
+			this.RaisePropertyChanged(nameof(this.Top));
 		}
 
+		private const double DISPLAY_MARGIN = 10d;
 
 		#region Time変更通知プロパティ
 		public string Time => DateTime.Now.ToShortTimeString();
@@ -86,5 +97,13 @@ namespace twinkfrag.Timepiece.ViewModels
 
 		private void UpdateWeekday() => this.RaisePropertyChanged(nameof(this.Weekday));
 		#endregion
+
+		public double Top { get; }
+
+		public double Left { get; }
+
+		public double Height { get; } = 200d;
+
+		public double Width { get; } = 600d;
 	}
 }
