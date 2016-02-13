@@ -19,6 +19,7 @@
 		AllowsTransparency="True"
 		Topmost="True"
 		SnapsToDevicePixels="True" 
+		PreviewKeyDown="Clock_OnPreviewKeyDown"
 		Deactivated="Clock_OnDeactivated"
 		Background="{DynamicResource Background}" 
 		Foreground="{DynamicResource Foreground}" 

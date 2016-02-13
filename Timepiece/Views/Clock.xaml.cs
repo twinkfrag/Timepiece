@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace twinkfrag.Timepiece.Views
 {
 	/// <summary>
 	/// Clock.xaml の相互作用ロジック
 	/// </summary>
-	public partial class Clock : Window
+	public partial class Clock : Window, IDisposable
 	{
 		public Clock()
 		{
@@ -24,6 +25,25 @@ namespace twinkfrag.Timepiece.Views
 
 		private void Clock_OnDeactivated(object sender, EventArgs e)
 		{
+			this.Dispose();
+		}
+
+		private void Clock_OnPreviewKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Escape)
+			{
+				e.Handled = true;
+				this.Dispose();
+			}
+		}
+
+		private bool disposed = false;
+
+		public void Dispose()
+		{
+			if (this.disposed) return;
+
+			this.disposed = true;
 			this.Close();
 		}
 	}
