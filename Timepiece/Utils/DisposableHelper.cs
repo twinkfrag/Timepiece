@@ -19,6 +19,12 @@ namespace twinkfrag.Timepiece.Utils
 			}
 			return disposable;
 		}
+
+		public static T AddTo<T>(this T disposable, ICollection<IDisposable> compositeDisposable) where T : IDisposable
+		{
+			compositeDisposable?.Add(disposable);
+			return disposable;
+		}
 	}
 
 	public interface IDisposableHolder

@@ -51,5 +51,7 @@ namespace twinkfrag.Timepiece
 		}
 
 		ICollection<IDisposable> IDisposableHolder.CompositeDisposable => this.compositeDisposable;
+
+		public new static Application Current => System.Windows.Application.Current as Application;
 	}
 }
