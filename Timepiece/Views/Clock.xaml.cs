@@ -37,13 +37,13 @@ namespace twinkfrag.Timepiece.Views
 			}
 		}
 
-		private bool disposed = false;
+		public bool IsDisposed { get; private set; } = false;
 
 		public void Dispose()
 		{
-			if (this.disposed) return;
+			if (this.IsDisposed) return;
 
-			this.disposed = true;
+			this.IsDisposed = true;
 			this.Close();
 		}
 	}

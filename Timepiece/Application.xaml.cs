@@ -30,13 +30,16 @@ namespace twinkfrag.Timepiece
 
 			new TaskTrayIcon().AddTo(this);
 
+			Clock clock = null;
+
 			var detector = new ShortcutKeyDetector().AddTo(this);
 			detector.KeySetPressedAsObservable()
+					.Where(_ => clock?.IsDisposed ?? true)
 					.Where(args => args.ShortcutKey == this.Shortcut)
 			        .Subscribe(args =>
 			        {
 				        args.Handled = true;
-				        new Clock();
+				        clock = new Clock();
 			        }).AddTo(this);
 		}
 
