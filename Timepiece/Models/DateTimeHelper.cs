@@ -12,13 +12,13 @@ using twinkfrag.Timepiece.Utils;
 
 namespace twinkfrag.Timepiece.Models
 {
-	public static class DateTimeEx
+	public static class DateTimeHelper
 	{
 		private static readonly CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 		private static readonly Subject<DateTime> dateTimeSubject = new Subject<DateTime>();
 
-		static DateTimeEx()
+		static DateTimeHelper()
 		{
 			SetObservables();
 			compositeDisposable.AddTo(Application.Current);

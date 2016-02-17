@@ -62,7 +62,7 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\DateTimeEx.cs" />
+    <Compile Include="Models\DateTimeHelper.cs" />
     <Compile Include="ViewModels\ClockVewModel.cs" />
   </ItemGroup>
   <ItemGroup>

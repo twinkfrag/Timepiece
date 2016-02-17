@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Livet;
@@ -11,7 +12,7 @@ using Livet.Messaging;
 using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
-
+using Reactive.Bindings;
 using twinkfrag.Timepiece.Models;
 
 namespace twinkfrag.Timepiece.ViewModels
@@ -62,28 +63,24 @@ namespace twinkfrag.Timepiece.ViewModels
 
 		public void Initialize()
 		{
-			var timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.DataBind, (_, __) => this.UpdateTime(),
-				Dispatcher.CurrentDispatcher);
-			timer.Start();
-			this.CompositeDisposable.Add(() => timer.Stop());
 		}
 
-		#region Time変更通知プロパティ
-		public string Time => DateTime.Now.ToShortTimeString();
+		public ReactiveProperty<string> Time { get; }
+			 = DateTimeHelper.DateTimeAsObservable()
+							 .DistinctUntilChanged(x => x.Minute)
+							 .Select(x => x.ToShortTimeString())
+							 .ToReactiveProperty(initialValue: DateTime.Now.ToShortTimeString());
 
-		private void UpdateTime() => this.RaisePropertyChanged(nameof(this.Time));
-		#endregion
+		public ReactiveProperty<string> Date { get; }
+			 = DateTimeHelper.DateTimeAsObservable()
+							 .DistinctUntilChanged(x => x.Day)
+							 .Select(x => x.ToString("M"))
+							 .ToReactiveProperty(initialValue: DateTime.Today.ToString("M"));
 
-		#region Date変更通知プロパティ
-		public string Date => DateTime.Today.ToString("M");
-
-		private void UpdateDate() => this.RaisePropertyChanged(nameof(this.Date));
-		#endregion
-
-		#region Weekday変更通知プロパティ
-		public string Weekday => DateTime.Today.ToString("dddd");
-
-		private void UpdateWeekday() => this.RaisePropertyChanged(nameof(this.Weekday));
-		#endregion
+		public ReactiveProperty<string> Weekday { get; }
+			 = DateTimeHelper.DateTimeAsObservable()
+							 .DistinctUntilChanged(x => x.Day)
+							 .Select(x => x.ToString("dddd"))
+							 .ToReactiveProperty(initialValue: DateTime.Today.ToString("dddd"));
 	}
 }
