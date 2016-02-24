@@ -13,6 +13,7 @@ using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
 using Reactive.Bindings;
+using Reactive.Bindings.Extensions;
 using twinkfrag.Timepiece.Models;
 
 namespace twinkfrag.Timepiece.ViewModels
@@ -66,21 +67,30 @@ namespace twinkfrag.Timepiece.ViewModels
 		}
 
 		public ReactiveProperty<string> Time { get; }
-			 = DateTimeHelper.DateTimeAsObservable()
-							 .DistinctUntilChanged(x => x.Minute)
-							 .Select(x => x.ToShortTimeString())
-							 .ToReactiveProperty(initialValue: DateTime.Now.ToShortTimeString());
 
 		public ReactiveProperty<string> Date { get; }
-			 = DateTimeHelper.DateTimeAsObservable()
-							 .DistinctUntilChanged(x => x.Day)
-							 .Select(x => x.ToString("M"))
-							 .ToReactiveProperty(initialValue: DateTime.Today.ToString("M"));
 
 		public ReactiveProperty<string> Weekday { get; }
-			 = DateTimeHelper.DateTimeAsObservable()
-							 .DistinctUntilChanged(x => x.Day)
-							 .Select(x => x.ToString("dddd"))
-							 .ToReactiveProperty(initialValue: DateTime.Today.ToString("dddd"));
+
+		public ClockVewModel()
+		{
+			this.Time = DateTimeHelper.DateTimeAsObservable()
+									  .DistinctUntilChanged(x => x.Minute)
+									  .Select(x => x.ToShortTimeString())
+									  .ToReactiveProperty(initialValue: DateTime.Now.ToShortTimeString())
+									  .AddTo(this.CompositeDisposable);
+
+			this.Date = DateTimeHelper.DateTimeAsObservable()
+									  .DistinctUntilChanged(x => x.Day)
+									  .Select(x => x.ToString("M"))
+									  .ToReactiveProperty(initialValue: DateTime.Today.ToString("M"))
+									  .AddTo(this.CompositeDisposable);
+
+			this.Weekday = DateTimeHelper.DateTimeAsObservable()
+									  .DistinctUntilChanged(x => x.Day)
+									  .Select(x => x.ToString("dddd"))
+									  .ToReactiveProperty(initialValue: DateTime.Today.ToString("dddd"))
+									  .AddTo(this.CompositeDisposable);
+		}
 	}
 }
