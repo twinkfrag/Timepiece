@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 using twinkfrag.Timepiece.Models;
 using twinkfrag.Timepiece.Models.ShortcutKey;
+using twinkfrag.Timepiece.Properties;
 using twinkfrag.Timepiece.Utils;
 using twinkfrag.Timepiece.Views;
 
@@ -22,8 +23,6 @@ namespace twinkfrag.Timepiece
 	{
 		private readonly CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-		public ShortcutKey Shortcut { get; } = new ShortcutKey(Key.C, Key.LWin, Key.LeftCtrl);
-
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
@@ -35,7 +34,7 @@ namespace twinkfrag.Timepiece
 			var detector = new ShortcutKeyDetector().AddTo(this);
 			detector.KeySetPressedAsObservable()
 					.Where(_ => clock?.IsDisposed ?? true)
-					.Where(args => args.ShortcutKey == this.Shortcut)
+					.Where(args => args.ShortcutKey == Settings.Default.ModkeySetting.ToShortcutKey())
 			        .Subscribe(args =>
 			        {
 				        args.Handled = true;
