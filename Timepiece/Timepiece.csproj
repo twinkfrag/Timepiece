@@ -77,6 +77,10 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Interop\MouseEventFlag.cs" />
+    <Compile Include="Interop\NativeMethods.cs" />
+    <Compile Include="Interop\WindowsMessage.cs" />
+    <Compile Include="Models\ClockTypeSetting.cs" />
     <Compile Include="Models\DateTimeHelper.cs" />
     <Compile Include="Models\ModkeySetting.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -85,6 +89,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="Models\ShowCalendar.cs" />
     <Compile Include="ViewModels\ClockVewModel.cs" />
   </ItemGroup>
   <ItemGroup>

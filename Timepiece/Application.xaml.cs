@@ -33,13 +33,23 @@ namespace twinkfrag.Timepiece
 
 			var detector = new ShortcutKeyDetector().AddTo(this);
 			detector.KeySetPressedAsObservable()
+					.Where(_ => Settings.Default.ClockTypeSetting == ClockTypeSetting.Win8)
 					.Where(_ => clock?.IsDisposed ?? true)
 					.Where(args => args.ShortcutKey == Settings.Default.ModkeySetting.ToShortcutKey())
+					.Subscribe(args =>
+					{
+						args.Handled = true;
+						clock = new Clock();
+					}).AddTo(this);
+
+			detector.KeySetPressedAsObservable()
+			        .Where(_ => Settings.Default.ClockTypeSetting == ClockTypeSetting.Calendar)
+			        .Where(args => args.ShortcutKey == Settings.Default.ModkeySetting.ToShortcutKey())
 			        .Subscribe(args =>
 			        {
 				        args.Handled = true;
-				        clock = new Clock();
-			        }).AddTo(this);
+				        ShowCalendar.Show();
+			        });
 		}
 
 		protected override void OnExit(ExitEventArgs e)

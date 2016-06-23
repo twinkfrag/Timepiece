@@ -23,6 +23,17 @@ namespace twinkfrag.Timepiece.Views
 				Visible = true,
 				ContextMenu = new ContextMenu(new[]
 				{
+					new MenuItem("Style", new[]
+					{
+						new MenuItem("Windows 8 Charm Clock", (s, e) => { Settings.Default.ClockTypeSetting = ClockTypeSetting.Win8; })
+						{
+							Checked = Settings.Default.ClockTypeSetting == ClockTypeSetting.Win8
+						},
+						new MenuItem("Windows Taskbar Calendar", (s, e) => {Settings.Default.ClockTypeSetting = ClockTypeSetting.Calendar; })
+						{
+							Checked = Settings.Default.ClockTypeSetting == ClockTypeSetting.Calendar
+						},
+					}),
 					new MenuItem("Win + C +", modkeyMenuItems),
 					new MenuItem("E&xit", (sender, args) => Application.Current.Shutdown()),
 				}),

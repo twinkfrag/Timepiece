@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using twinkfrag.Timepiece.Models;
+// ReSharper disable CheckNamespace
 
 namespace twinkfrag.Timepiece.Properties
 {
@@ -22,6 +23,7 @@ namespace twinkfrag.Timepiece.Properties
 			this.PropertyChanged += (_, __) => this.Save();
 
 			if (this[nameof(this.ModkeySetting)] == null) this.ModkeySetting = ModkeySetting.None;
+			if (this[nameof(this.ClockTypeSetting)] == null) this.ClockTypeSetting = ClockTypeSetting.Win8;
 		}
 
 		private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e)
@@ -58,6 +60,13 @@ namespace twinkfrag.Timepiece.Properties
 				this.ModkeySetting += (int)key;
 				return true;
 			}
+		}
+
+		[UserScopedSetting]
+		public ClockTypeSetting ClockTypeSetting
+		{
+			get { return (ClockTypeSetting)this[nameof(this.ClockTypeSetting)]; }
+			set { this[nameof(this.ClockTypeSetting)] = value; }
 		}
 	}
 }
