@@ -48,10 +48,11 @@ namespace twinkfrag.Timepiece.Interop
 		[DllImport(User32Dll)]
 		public static extern IntPtr mouse_event(MouseEventFlag dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
 
-		public const uint HTCAPTION = 2;
+		[DllImport(User32Dll)]
+		public static extern IntPtr MonitorFromWindow(IntPtr hWnd, int dwFlags);
 
-		public const int MOUSEEVENTF_LEFTDOWN = 0x2;
-		public const int MOUSEEVENTF_LEFTUP = 0x4;
+		[DllImport("Shcore.dll")]
+		public static extern int GetDpiForMonitor(IntPtr hMonitor, int dpiType, uint dpiX, uint dpiY);
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
