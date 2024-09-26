@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Text;
 using twinkfrag.Timepiece.Interop;
@@ -58,8 +58,7 @@ namespace twinkfrag.Timepiece.Models
 			//var ret = SendMessage(hWndTray, WM_LBUTTONDOWN, wParam, lParam);
 			//SendMessage(hWndTray, WM_LBUTTONUP, wParam, lParam);
 
-			var current = new Point();
-			NativeMethods.GetCursorPos(ref current);
+			NativeMethods.GetCursorPos(out var current);
 			NativeMethods.SetCursorPos(rect.Left + 10, rect.Top + 10);
 			NativeMethods.mouse_event(MouseEventFlag.MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
 			NativeMethods.mouse_event(MouseEventFlag.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);

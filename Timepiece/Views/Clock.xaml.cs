@@ -1,50 +1,61 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Input;
+using twinkfrag.Timepiece.Interop;
 
 namespace twinkfrag.Timepiece.Views
 {
-	/// <summary>
-	/// Clock.xaml の相互作用ロジック
-	/// </summary>
-	public partial class Clock : Window, IDisposable
-	{
-		public Clock()
-		{
-			InitializeComponent();
+    /// <summary>
+    /// Clock.xaml の相互作用ロジック
+    /// </summary>
+    public partial class Clock : Window, IDisposable
+    {
+        public Clock()
+        {
+            InitializeComponent();
 
-			var desktop = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position).Bounds;
-			this.Left = desktop.Left + DISPLAY_MARGIN;
-			this.Top = desktop.Bottom - this.Height - DISPLAY_MARGIN;
+            if (!NativeMethods.GetCursorPos(out var cursorPos)) return;
+            var currentMonitor = NativeMethods.MonitorFromPoint(cursorPos, MonitorDwFlags.DefaultToNearest);
+            if (currentMonitor == IntPtr.Zero) return;
+            if (NativeMethods.GetDpiForMonitor(
+                currentMonitor, MonitorDpiType.Effective, out var dpiX, out var dpiY
+                ) != HResult.S_OK) return;
+            var monitorInfo = new MonitorInfo();
+            if (!NativeMethods.GetMonitorInfo(currentMonitor, ref monitorInfo)) return;
+            var dpiScaleX = dpiX / 96.0f;
+            var dpiScaleY = dpiY / 96.0f;
 
-			this.Show();
-			this.Activate();
-		}
+            this.Left = (monitorInfo.rcWork.Left + DISPLAY_MARGIN) / dpiScaleX;
+            this.Top = (monitorInfo.rcWork.Bottom - this.Height - DISPLAY_MARGIN) / dpiScaleY;
 
-		private const double DISPLAY_MARGIN = 100d;
+            this.Show();
+            this.Activate();
+        }
 
-		private void Clock_OnDeactivated(object sender, EventArgs e)
-		{
-			this.Dispose();
-		}
+        private const double DISPLAY_MARGIN = 100d;
 
-		private void Clock_OnPreviewKeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.Key == Key.Escape)
-			{
-				e.Handled = true;
-				this.Dispose();
-			}
-		}
+        private void Clock_OnDeactivated(object sender, EventArgs e)
+        {
+            //this.Dispose();
+        }
 
-		public bool IsDisposed { get; private set; } = false;
+        private void Clock_OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                e.Handled = true;
+                this.Dispose();
+            }
+        }
 
-		public void Dispose()
-		{
-			if (this.IsDisposed) return;
+        public bool IsDisposed { get; private set; } = false;
 
-			this.IsDisposed = true;
-			this.Close();
-		}
-	}
+        public void Dispose()
+        {
+            if (this.IsDisposed) return;
+
+            this.IsDisposed = true;
+            this.Close();
+        }
+    }
 }
